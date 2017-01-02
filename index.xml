@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>a4 Pizza</title>
+    <link>http://replace-this-with-your-hugo-site.com/index.xml</link>
+    <description>Recent content on a4 Pizza</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 26 Jan 2016 07:50:39 +0000</lastBuildDate>
+    <atom:link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Simplest .deb</title>
+      <link>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</link>
+      <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</guid>
+      <description>&lt;p&gt;We are to build a package called &lt;code&gt;package-a&lt;/code&gt;.
+Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# tree package-a
+package-a
+|-- DEBIAN
+|   `-- control
+`-- usr
+    `-- bin
+        `-- package-a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source contains our &amp;ldquo;application&amp;rdquo;, simply an executable shell script, also called &lt;code&gt;package-a&lt;/code&gt;, although there is no significance in using the same name for both the executable and the Debian package.  Note, though, that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. &lt;code&gt;/usr/bin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To build this package we can use the tool &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg --build package-a build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You might also see the equivalent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg-deb --build package-a build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A quick look at the manpage for &lt;code&gt;dpkg&lt;/code&gt; will reveal that it simply delegates some of its capabilities to lower level tools - hence the alternative form.&lt;/p&gt;
+
+&lt;p&gt;In either case, the &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the source directory (&lt;code&gt;package-a/&lt;/code&gt;).  The second positional argument is the target directory into which the archive is built (&lt;code&gt;build/&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;You may be interested to see what&amp;rsquo;s actually in the built package.  Since a Debian package is an &lt;code&gt;ar&lt;/code&gt; format archive, you can look inside using the &lt;code&gt;ar&lt;/code&gt; tool.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ar t build/package-a_1.0.0_all.deb
+debian-binary
+control.tar.gz
+data.tar.xz
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Aptly</title>
+      <link>http://replace-this-with-your-hugo-site.com/post/aptly/</link>
+      <pubDate>Mon, 11 Jan 2016 14:58:15 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/post/aptly/</guid>
+      <description>&lt;p&gt;This document serves as a quick primer on using Aptly and working with Debian package repositories as part of your software development lifecycle.&lt;/p&gt;
+
+&lt;p&gt;To help easily work through some of the concepts there is a Dockerfile &lt;a href=&#34;https://github.com/arthurcrawford/deb-build&#34;&gt;here&lt;/a&gt; that will help set you up with what you need.&lt;/p&gt;
+
+&lt;p&gt;Running a conatiner to test Aptly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/arthurcrawford/deb-build.git
+$ cd deb-build
+$ docker build -t deb-build . 
+$ docker run -ti -p 8080:8080 deb-build bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Installing Aptly on Mac.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew install aptly
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Creating a repo.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ aptly repo create -distribution=test -component=main acme-test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Listing repos.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ aptly repo list
+
+List of local repos:
+* [acme-test] (packages: 0)
+
+To get more information about local repository, run `aptly repo show &amp;lt;name&amp;gt;`.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The configuration.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat  ~/.aptly.conf 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Publishing (to local file system for testing only)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ aptly -architectures=amd64 publish repo --skip-signing=true acme-test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the above, we need to specify the architecture.  For example, to determine what this is on your target system:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ dpkg --print-architecture
+amd64    
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also, in the example we have used the option &lt;code&gt;--skip-signing=true&lt;/code&gt; which we wouldn&amp;rsquo;t normally want to do.&lt;/p&gt;
+
+&lt;p&gt;Serve over embedded HTTP server.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ aptly serve
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Test that aptly&amp;rsquo;s local embedded server is available:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ curl http://192.168.99.100:8080/    
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>third</title>
+      <link>http://replace-this-with-your-hugo-site.com/post/third/</link>
+      <pubDate>Thu, 07 Jan 2016 07:59:27 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/post/third/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>second</title>
+      <link>http://replace-this-with-your-hugo-site.com/post/second/</link>
+      <pubDate>Thu, 07 Jan 2016 07:59:19 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/post/second/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

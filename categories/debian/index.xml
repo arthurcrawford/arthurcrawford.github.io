@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debian on a4 Pizza</title>
+    <link>http://replace-this-with-your-hugo-site.com/categories/debian/index.xml</link>
+    <description>Recent content in Debian on a4 Pizza</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://replace-this-with-your-hugo-site.com/categories/debian/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Simplest .deb</title>
+      <link>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</link>
+      <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</guid>
+      <description>&lt;p&gt;We are to build a package called &lt;code&gt;package-a&lt;/code&gt;.
+Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# tree package-a
+package-a
+|-- DEBIAN
+|   `-- control
+`-- usr
+    `-- bin
+        `-- package-a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source contains our &amp;ldquo;application&amp;rdquo;, simply an executable shell script, also called &lt;code&gt;package-a&lt;/code&gt;, although there is no significance in using the same name for both the executable and the Debian package.  Note, though, that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. &lt;code&gt;/usr/bin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To build this package we can use the tool &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg --build package-a build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You might also see the equivalent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg-deb --build package-a build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A quick look at the manpage for &lt;code&gt;dpkg&lt;/code&gt; will reveal that it simply delegates some of its capabilities to lower level tools - hence the alternative form.&lt;/p&gt;
+
+&lt;p&gt;In either case, the &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the source directory (&lt;code&gt;package-a/&lt;/code&gt;).  The second positional argument is the target directory into which the archive is built (&lt;code&gt;build/&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;You may be interested to see what&amp;rsquo;s actually in the built package.  Since a Debian package is an &lt;code&gt;ar&lt;/code&gt; format archive, you can look inside using the &lt;code&gt;ar&lt;/code&gt; tool.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ar t build/package-a_1.0.0_all.deb
+debian-binary
+control.tar.gz
+data.tar.xz
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
