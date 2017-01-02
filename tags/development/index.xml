@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Development on a4 Pizza</title>
-    <link>http://replace-this-with-your-hugo-site.com/tags/development/index.xml</link>
+    <link>http://a4pizza.com/tags/development/index.xml</link>
     <description>Recent content in Development on a4 Pizza</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://a4pizza.com/tags/development/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Simplest .deb</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</link>
+      <link>http://a4pizza.com/post/simplestdeb/</link>
       <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</guid>
+      <guid>http://a4pizza.com/post/simplestdeb/</guid>
       <description>&lt;p&gt;We are to build a package called &lt;code&gt;package-a&lt;/code&gt;.
 Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
 
@@ -54,19 +54,19 @@ data.tar.xz
     
     <item>
       <title>third</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/third/</link>
+      <link>http://a4pizza.com/post/third/</link>
       <pubDate>Thu, 07 Jan 2016 07:59:27 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/third/</guid>
+      <guid>http://a4pizza.com/post/third/</guid>
       <description></description>
     </item>
     
     <item>
       <title>second</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/second/</link>
+      <link>http://a4pizza.com/post/second/</link>
       <pubDate>Thu, 07 Jan 2016 07:59:19 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/second/</guid>
+      <guid>http://a4pizza.com/post/second/</guid>
       <description></description>
     </item>
     

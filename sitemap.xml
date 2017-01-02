@@ -2,79 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</loc>
+    <loc>http://a4pizza.com/post/simplestdeb/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/post/aptly/</loc>
+    <loc>http://a4pizza.com/post/aptly/</loc>
     <lastmod>2016-01-11T14:58:15+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/post/third/</loc>
+    <loc>http://a4pizza.com/post/third/</loc>
     <lastmod>2016-01-07T07:59:27+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/post/second/</loc>
+    <loc>http://a4pizza.com/post/second/</loc>
     <lastmod>2016-01-07T07:59:19+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/categories/</loc>
+    <loc>http://a4pizza.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/tags/debian/</loc>
+    <loc>http://a4pizza.com/tags/debian/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/categories/debian/</loc>
+    <loc>http://a4pizza.com/categories/debian/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/tags/development/</loc>
+    <loc>http://a4pizza.com/tags/development/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/categories/development/</loc>
+    <loc>http://a4pizza.com/categories/development/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/tags/golang/</loc>
+    <loc>http://a4pizza.com/tags/golang/</loc>
     <lastmod>2016-01-07T07:59:27+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/categories/golang/</loc>
+    <loc>http://a4pizza.com/categories/golang/</loc>
     <lastmod>2016-01-07T07:59:27+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/post/</loc>
+    <loc>http://a4pizza.com/post/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/tags/</loc>
+    <loc>http://a4pizza.com/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://replace-this-with-your-hugo-site.com/</loc>
+    <loc>http://a4pizza.com/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
     <priority>0</priority>
   </url>

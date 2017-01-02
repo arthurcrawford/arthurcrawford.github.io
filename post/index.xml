@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on a4 Pizza</title>
-    <link>http://replace-this-with-your-hugo-site.com/post/index.xml</link>
+    <link>http://a4pizza.com/post/index.xml</link>
     <description>Recent content in Posts on a4 Pizza</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 26 Jan 2016 07:50:39 +0000</lastBuildDate>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://a4pizza.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Simplest .deb</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</link>
+      <link>http://a4pizza.com/post/simplestdeb/</link>
       <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/simplestdeb/</guid>
+      <guid>http://a4pizza.com/post/simplestdeb/</guid>
       <description>&lt;p&gt;We are to build a package called &lt;code&gt;package-a&lt;/code&gt;.
 Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
 
@@ -55,10 +55,10 @@ data.tar.xz
     
     <item>
       <title>Aptly</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/aptly/</link>
+      <link>http://a4pizza.com/post/aptly/</link>
       <pubDate>Mon, 11 Jan 2016 14:58:15 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/aptly/</guid>
+      <guid>http://a4pizza.com/post/aptly/</guid>
       <description>&lt;p&gt;This document serves as a quick primer on using Aptly and working with Debian package repositories as part of your software development lifecycle.&lt;/p&gt;
 
 &lt;p&gt;To help easily work through some of the concepts there is a Dockerfile &lt;a href=&#34;https://github.com/arthurcrawford/deb-build&#34;&gt;here&lt;/a&gt; that will help set you up with what you need.&lt;/p&gt;
@@ -123,19 +123,19 @@ amd64
     
     <item>
       <title>third</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/third/</link>
+      <link>http://a4pizza.com/post/third/</link>
       <pubDate>Thu, 07 Jan 2016 07:59:27 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/third/</guid>
+      <guid>http://a4pizza.com/post/third/</guid>
       <description></description>
     </item>
     
     <item>
       <title>second</title>
-      <link>http://replace-this-with-your-hugo-site.com/post/second/</link>
+      <link>http://a4pizza.com/post/second/</link>
       <pubDate>Thu, 07 Jan 2016 07:59:19 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/post/second/</guid>
+      <guid>http://a4pizza.com/post/second/</guid>
       <description></description>
     </item>
     
