@@ -6,6 +6,7 @@
     <description>Recent content in Development on a4 Pizza</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>Copyright © 2017 Art Crawford</copyright>
     <atom:link href="http://a4pizza.com/tags/development/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
@@ -14,60 +15,42 @@
       <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
       
       <guid>http://a4pizza.com/post/simplestdeb/</guid>
-      <description>&lt;p&gt;We are to build a package called &lt;code&gt;package-a&lt;/code&gt;.
+      <description>&lt;p&gt;We are to build a package called &lt;code&gt;margherita&lt;/code&gt;.
 Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# tree package-a
-package-a
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# tree margherita
+margherita
 |-- DEBIAN
 |   `-- control
 `-- usr
     `-- bin
-        `-- package-a
+        `-- mozzarella
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The source contains our &amp;ldquo;application&amp;rdquo;, simply an executable shell script, also called &lt;code&gt;package-a&lt;/code&gt;, although there is no significance in using the same name for both the executable and the Debian package.  Note, though, that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. &lt;code&gt;/usr/bin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The source contains our &amp;ldquo;application&amp;rdquo;, simply an executable shell script called &lt;code&gt;mozzarella&lt;/code&gt;.  Note that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. &lt;code&gt;/usr/bin&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;To build this package we can use the tool &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# dpkg --build package-a build
+&lt;pre&gt;&lt;code&gt;# dpkg --build margherita build
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;You might also see the equivalent:&lt;/p&gt;
+&lt;p&gt;You can do the same thing this way:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# dpkg-deb --build package-a build
+&lt;pre&gt;&lt;code&gt;# dpkg-deb --build margherita build
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;A quick look at the manpage for &lt;code&gt;dpkg&lt;/code&gt; will reveal that it simply delegates some of its capabilities to lower level tools - hence the alternative form.&lt;/p&gt;
 
-&lt;p&gt;In either case, the &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the source directory (&lt;code&gt;package-a/&lt;/code&gt;).  The second positional argument is the target directory into which the archive is built (&lt;code&gt;build/&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;In either case, the &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the source directory (&lt;code&gt;margherita/&lt;/code&gt;).  The second positional argument is the target directory into which the archive is built (&lt;code&gt;build/&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;You may be interested to see what&amp;rsquo;s actually in the built package.  Since a Debian package is an &lt;code&gt;ar&lt;/code&gt; format archive, you can look inside using the &lt;code&gt;ar&lt;/code&gt; tool.&lt;/p&gt;
+&lt;p&gt;You may be interested to see what&amp;rsquo;s actually in the built package.  A Debian package is an &lt;code&gt;ar&lt;/code&gt; format archive.  You can look inside it using the &lt;code&gt;ar&lt;/code&gt; tool.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# ar t build/package-a_1.0.0_all.deb
+&lt;pre&gt;&lt;code&gt;# ar t build/margherita_1.0.0_all.deb
 debian-binary
 control.tar.gz
 data.tar.xz
 &lt;/code&gt;&lt;/pre&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>third</title>
-      <link>http://a4pizza.com/post/third/</link>
-      <pubDate>Thu, 07 Jan 2016 07:59:27 +0000</pubDate>
-      
-      <guid>http://a4pizza.com/post/third/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>second</title>
-      <link>http://a4pizza.com/post/second/</link>
-      <pubDate>Thu, 07 Jan 2016 07:59:19 +0000</pubDate>
-      
-      <guid>http://a4pizza.com/post/second/</guid>
-      <description></description>
     </item>
     
   </channel>

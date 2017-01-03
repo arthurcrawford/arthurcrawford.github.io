@@ -7,21 +7,6 @@
   </url>
   
   <url>
-    <loc>http://a4pizza.com/post/aptly/</loc>
-    <lastmod>2016-01-11T14:58:15+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://a4pizza.com/post/third/</loc>
-    <lastmod>2016-01-07T07:59:27+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://a4pizza.com/post/second/</loc>
-    <lastmod>2016-01-07T07:59:19+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://a4pizza.com/categories/</loc>
     <priority>0</priority>
   </url>
@@ -47,18 +32,6 @@
   <url>
     <loc>http://a4pizza.com/categories/development/</loc>
     <lastmod>2016-01-26T07:50:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://a4pizza.com/tags/golang/</loc>
-    <lastmod>2016-01-07T07:59:27+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://a4pizza.com/categories/golang/</loc>
-    <lastmod>2016-01-07T07:59:27+00:00</lastmod>
     <priority>0</priority>
   </url>
   
