@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debian on a4 Pizza</title>
+    <link>http://a4pizza.com/tags/debian/index.xml</link>
+    <description>Recent content in Debian on a4 Pizza</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2017 Art Crawford</copyright>
+    <atom:link href="http://a4pizza.com/tags/debian/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Simplest .deb</title>
+      <link>http://a4pizza.com/post/simplestdeb/</link>
+      <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
+      
+      <guid>http://a4pizza.com/post/simplestdeb/</guid>
+      <description>&lt;p&gt;We are to build a package called &lt;code&gt;margherita&lt;/code&gt;.
+Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# tree margherita
+margherita
+|-- DEBIAN
+|   `-- control
+`-- usr
+    `-- bin
+        `-- mozzarella
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source contains our &amp;ldquo;application&amp;rdquo;, simply an executable shell script called &lt;code&gt;mozzarella&lt;/code&gt;.  Note that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. &lt;code&gt;/usr/bin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To build this package we can use the tool &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg --build margherita build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can do the same thing this way:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg-deb --build margherita build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A quick look at the manpage for &lt;code&gt;dpkg&lt;/code&gt; will reveal that it simply delegates some of its capabilities to lower level tools - hence the alternative form.&lt;/p&gt;
+
+&lt;p&gt;In either case, the &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the source directory (&lt;code&gt;margherita/&lt;/code&gt;).  The second positional argument is the target directory into which the archive is built (&lt;code&gt;build/&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;You may be interested to see what&amp;rsquo;s actually in the built package.  A Debian package is an &lt;code&gt;ar&lt;/code&gt; format archive.  You can look inside it using the &lt;code&gt;ar&lt;/code&gt; tool.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ar t build/margherita_1.0.0_all.deb
+debian-binary
+control.tar.gz
+data.tar.xz
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
