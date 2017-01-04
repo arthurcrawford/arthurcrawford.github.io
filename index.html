@@ -37,14 +37,14 @@
     <div class="sidebar-about">
       <a href="http://a4pizza.com/"><h1>a4 Pizza</h1></a>
       <p class="lead">
-       Software and pizza toppings 
+       software - no anchovies 
       </p>
     </div>
 
     <ul class="sidebar-nav">
       <li><a href="/">Home</a> </li>
       
-        <li><a href="/post/simplestdeb/"> Simplest .deb </a></li>
+        <li><a href="/post/simplestdeb/"> Simples .deb </a></li>
       
     </ul>
 
@@ -60,14 +60,21 @@
   <div class="post">
     <h1 class="post-title">
       <a href="http://a4pizza.com/post/simplestdeb/">
-        Simplest .deb
+        Simples .deb
       </a>
     </h1>
 
     <span class="post-date">Tue, Jan 26, 2016</span>
 
-    <p>We are to build a package called <code>margherita</code>.
-Let&rsquo;s examine the source code tree.</p>
+    <p>If you&rsquo;ve managed to choke down other spurious convenience food analogies in related posts on this site, well done!  I hope this one proves a little more palatable - with fewer anchovies at least.</p>
+
+<p>We&rsquo;re starting from the assumption that we want to build the simplest Debian package we can, just so we can understand the minimal set of tools and ingredients we need - no more.</p>
+
+<p>We think we pretty much <em>get</em> Debian package management and distribution.  At least we do on a workaday basis; <code>apt-get</code>, <code>dpkg</code>, <code>aptitude</code> and all their chums.  But let&rsquo;s say we want to build our <em>own</em> software into a Debian package.  There&rsquo;s nothing remotely &ldquo;official&rdquo; about our approach here by the way - we simply want to hot-wire, and joy-ride, the <em>Debian Pizza Delivery Scooter of Mirth</em>.</p>
+
+<p>We&rsquo;ll create a package called <code>margherita</code>, putting into it a &ldquo;useful&rdquo; tool called <code>mozzarella</code>.  And then we&rsquo;ll distribute it direct to our mouth when we&rsquo;re done.</p>
+
+<p>First, let&rsquo;s examine the tree of the source code we actually need.</p>
 
 <pre><code class="language-bash"># tree margherita
 margherita
@@ -78,29 +85,102 @@ margherita
         `-- mozzarella
 </code></pre>
 
-<p>The source contains our &ldquo;application&rdquo;, simply an executable shell script called <code>mozzarella</code>.  Note that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. <code>/usr/bin</code>.</p>
+<p>There&rsquo;s not much there when you boil it down.  This may come as a surprise to some - it may even upset others!</p>
 
-<p>To build this package we can use the tool <code>dpkg</code>.</p>
+<p>The first thing is the root directory that contains everything.  Its name is the same as the name of the package.</p>
 
-<pre><code># dpkg --build margherita build
+<p>The second thing is that there&rsquo;s a <code>DEBIAN/control</code> file in there.  This is the only <em>clever</em> bit really.  We&rsquo;ll come back to this.</p>
+
+<p>The third, and final, thing is everything else that <em>isn&rsquo;t</em> the <code>DEBIAN</code> directory.  These are the files that will be installed under <code>/</code>.  In our case it&rsquo;s some application software - an imagined command line tool called <code>mozzarella</code>.  Note the directory structure though.  The structure mirrors how it will look when installed under <code>/</code>.  So in this case we&rsquo;ll get a <code>/usr/bin/mozzarella</code> in our path when we install the package.</p>
+
+<p>For our <code>mozzarella</code>, some kind of smokin&rsquo; app like the following might be in order.</p>
+
+<pre><code class="language-bash">cat &lt;&lt; EOF &gt; margherita/usr/bin/mozzarella
+#!/bin/sh
+echo Stringy cheese!
+EOF
+chmod +x margherita/usr/bin/mozzarella
 </code></pre>
 
-<p>You can do the same thing this way:</p>
+<p>OK, so what&rsquo;s in the <code>control</code> file?</p>
 
-<pre><code># dpkg-deb --build margherita build
+<pre><code class="language-bash">Package: margherita
+Version: 1.0.0
+Maintainer: Art Crawford &lt;art@a4pizza.com&gt;
+Description: Sample package to illustrate deb build process
+ Prints out a test message.
+Architecture: all
 </code></pre>
 
-<p>A quick look at the manpage for <code>dpkg</code> will reveal that it simply delegates some of its capabilities to lower level tools - hence the alternative form.</p>
+<p>The tags and formatting are important - they&rsquo;re specified.  Don&rsquo;t be leaving any out or you&rsquo;ll get ominous portents of doom from the spectral developers of Linux past.  They&rsquo;re important meta-data for the Debian packaging tool as we&rsquo;ll see in a minute.  There is a lot more that <em>could</em> go in there though, were our packaging needs to become more complex.</p>
 
-<p>In either case, the <code>--build</code> option takes a single argument - the source directory (<code>margherita/</code>).  The second positional argument is the target directory into which the archive is built (<code>build/</code>).</p>
+<p>Right now, pretty much the simplest way to build our package is to use the tool called <code>dpkg</code>.  For simplicity, we&rsquo;ll run it from the directory just above the package&rsquo;s root.</p>
 
-<p>You may be interested to see what&rsquo;s actually in the built package.  A Debian package is an <code>ar</code> format archive.  You can look inside it using the <code>ar</code> tool.</p>
+<pre><code># dpkg --build margherita targetdir
+</code></pre>
 
-<pre><code># ar t build/margherita_1.0.0_all.deb
+<p>&hellip;which, by the way, has the exact same effect as doing this:</p>
+
+<pre><code># dpkg-deb --build margherita targetdir
+</code></pre>
+
+<p><em>[A quick shufti at the man-page for both <code>dpkg</code> and <code>dpkg-deb</code> reveals their symbiosis.]</em></p>
+
+<p>The <code>--build</code> option takes a single argument - the root source directory (<code>margherita/</code>).  The second positional argument is an <em>existing</em> target directory into which the archive is built (<code>targetdir/</code> in our example).  <em>[If the second argument is something that doesn&rsquo;t exist, it is used, instead, as the name of the package file that&rsquo;s created.]</em></p>
+
+<p>Here is what happens when we actually do it.</p>
+
+<pre><code># mkdir targetdir
+# dpkg-deb --build margherita targetdir
+dpkg-deb: building package `margherita' in `targetdir/margherita_1.0.0_all.deb'.
+</code></pre>
+
+<p>You may be interested to see what&rsquo;s actually inside the generated binary <code>.deb</code> file.  At its lowest level, the Debian package file is actually an <a href="https://en.wikipedia.org/wiki/Ar_%28Unix%29"><code>ar</code></a> format archive.  So if you want to look inside it you can use the <code>ar</code> tool like so.</p>
+
+<pre><code># ar t targetdir/margherita_1.0.0_all.deb
 debian-binary
 control.tar.gz
 data.tar.xz
 </code></pre>
+
+<p>You could also extract these files using <code>ar x</code> and examine each one (<em>only if you&rsquo;re not busy</em>).  <code>debian-binary</code> is just a text file containing the Debian file format version. And <code>control.tar.gz</code> is our tarred, compressed control file - and any other stuff that was in the <code>DEBIAN/</code> directory would have gone in here too.  <code>data.tar.gz</code> is a tar-ball of the actual files that will be installed.</p>
+
+<p>All that remains is to chew the crust. As rogue Debianeers we want to see if our DIY, budget package behaves as we might expect it to.</p>
+
+<p>Can we install it?</p>
+
+<pre><code># dpkg -i targetdir/margherita_1.0.0_all.deb
+Selecting previously unselected package margherita.
+(Reading database ... 24742 files and directories currently installed.)
+Preparing to unpack .../margherita_1.0.0_all.deb ...
+Unpacking margherita (1.0.0) ...
+Setting up margherita (1.0.0) ...
+</code></pre>
+
+<p>Yes we can.</p>
+
+<p>Can we use it?</p>
+
+<pre><code># mozzarella
+Stringy cheese!
+</code></pre>
+
+<p>Yes we can.</p>
+
+<p>Can we remove it?</p>
+
+<pre><code># dpkg -r margherita
+(Reading database ... 24743 files and directories currently installed.)
+Removing margherita (1.0.0) ...
+</code></pre>
+
+<p>Yes we can.</p>
+
+<p>&lsquo;Nuff said!  We&rsquo;ve stripped down the essence of a Debian package to see how to easily create one and use it.</p>
+
+<p>With a bit of imagination you can easily see how a whole wealth of development tools and workflows can be built around this simple base.  Unsurprisingly, exactly this sort of ecosystem exists.  How Debian distributions are put together depends on it. For those contributing to <em>that</em> story a much deeper understanding of the shop-floor workings is needed.</p>
+
+<p>Nevertheless, the main point remains.  If you&rsquo;re just trying to get your teeth into a slice, trying to comprehend the whole pizza factory may leave you hungry for a while.  A lot of what&rsquo;s out there may be totally unnecessary to you if you&rsquo;re simply trying to piggy-back the process to distribute your own software.</p>
 
   </div>
   

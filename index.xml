@@ -11,13 +11,20 @@
     <atom:link href="http://a4pizza.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Simplest .deb</title>
+      <title>Simples .deb</title>
       <link>http://a4pizza.com/post/simplestdeb/</link>
       <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
       
       <guid>http://a4pizza.com/post/simplestdeb/</guid>
-      <description>&lt;p&gt;We are to build a package called &lt;code&gt;margherita&lt;/code&gt;.
-Let&amp;rsquo;s examine the source code tree.&lt;/p&gt;
+      <description>&lt;p&gt;If you&amp;rsquo;ve managed to choke down other spurious convenience food analogies in related posts on this site, well done!  I hope this one proves a little more palatable - with fewer anchovies at least.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re starting from the assumption that we want to build the simplest Debian package we can, just so we can understand the minimal set of tools and ingredients we need - no more.&lt;/p&gt;
+
+&lt;p&gt;We think we pretty much &lt;em&gt;get&lt;/em&gt; Debian package management and distribution.  At least we do on a workaday basis; &lt;code&gt;apt-get&lt;/code&gt;, &lt;code&gt;dpkg&lt;/code&gt;, &lt;code&gt;aptitude&lt;/code&gt; and all their chums.  But let&amp;rsquo;s say we want to build our &lt;em&gt;own&lt;/em&gt; software into a Debian package.  There&amp;rsquo;s nothing remotely &amp;ldquo;official&amp;rdquo; about our approach here by the way - we simply want to hot-wire, and joy-ride, the &lt;em&gt;Debian Pizza Delivery Scooter of Mirth&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll create a package called &lt;code&gt;margherita&lt;/code&gt;, putting into it a &amp;ldquo;useful&amp;rdquo; tool called &lt;code&gt;mozzarella&lt;/code&gt;.  And then we&amp;rsquo;ll distribute it direct to our mouth when we&amp;rsquo;re done.&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s examine the tree of the source code we actually need.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# tree margherita
 margherita
@@ -28,29 +35,102 @@ margherita
         `-- mozzarella
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The source contains our &amp;ldquo;application&amp;rdquo;, simply an executable shell script called &lt;code&gt;mozzarella&lt;/code&gt;.  Note that the relative path of the executable in the source tree reflects its intended destination when installed - i.e. &lt;code&gt;/usr/bin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s not much there when you boil it down.  This may come as a surprise to some - it may even upset others!&lt;/p&gt;
 
-&lt;p&gt;To build this package we can use the tool &lt;code&gt;dpkg&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The first thing is the root directory that contains everything.  Its name is the same as the name of the package.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# dpkg --build margherita build
+&lt;p&gt;The second thing is that there&amp;rsquo;s a &lt;code&gt;DEBIAN/control&lt;/code&gt; file in there.  This is the only &lt;em&gt;clever&lt;/em&gt; bit really.  We&amp;rsquo;ll come back to this.&lt;/p&gt;
+
+&lt;p&gt;The third, and final, thing is everything else that &lt;em&gt;isn&amp;rsquo;t&lt;/em&gt; the &lt;code&gt;DEBIAN&lt;/code&gt; directory.  These are the files that will be installed under &lt;code&gt;/&lt;/code&gt;.  In our case it&amp;rsquo;s some application software - an imagined command line tool called &lt;code&gt;mozzarella&lt;/code&gt;.  Note the directory structure though.  The structure mirrors how it will look when installed under &lt;code&gt;/&lt;/code&gt;.  So in this case we&amp;rsquo;ll get a &lt;code&gt;/usr/bin/mozzarella&lt;/code&gt; in our path when we install the package.&lt;/p&gt;
+
+&lt;p&gt;For our &lt;code&gt;mozzarella&lt;/code&gt;, some kind of smokin&amp;rsquo; app like the following might be in order.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; margherita/usr/bin/mozzarella
+#!/bin/sh
+echo Stringy cheese!
+EOF
+chmod +x margherita/usr/bin/mozzarella
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;You can do the same thing this way:&lt;/p&gt;
+&lt;p&gt;OK, so what&amp;rsquo;s in the &lt;code&gt;control&lt;/code&gt; file?&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# dpkg-deb --build margherita build
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Package: margherita
+Version: 1.0.0
+Maintainer: Art Crawford &amp;lt;art@a4pizza.com&amp;gt;
+Description: Sample package to illustrate deb build process
+ Prints out a test message.
+Architecture: all
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;A quick look at the manpage for &lt;code&gt;dpkg&lt;/code&gt; will reveal that it simply delegates some of its capabilities to lower level tools - hence the alternative form.&lt;/p&gt;
+&lt;p&gt;The tags and formatting are important - they&amp;rsquo;re specified.  Don&amp;rsquo;t be leaving any out or you&amp;rsquo;ll get ominous portents of doom from the spectral developers of Linux past.  They&amp;rsquo;re important meta-data for the Debian packaging tool as we&amp;rsquo;ll see in a minute.  There is a lot more that &lt;em&gt;could&lt;/em&gt; go in there though, were our packaging needs to become more complex.&lt;/p&gt;
 
-&lt;p&gt;In either case, the &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the source directory (&lt;code&gt;margherita/&lt;/code&gt;).  The second positional argument is the target directory into which the archive is built (&lt;code&gt;build/&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Right now, pretty much the simplest way to build our package is to use the tool called &lt;code&gt;dpkg&lt;/code&gt;.  For simplicity, we&amp;rsquo;ll run it from the directory just above the package&amp;rsquo;s root.&lt;/p&gt;
 
-&lt;p&gt;You may be interested to see what&amp;rsquo;s actually in the built package.  A Debian package is an &lt;code&gt;ar&lt;/code&gt; format archive.  You can look inside it using the &lt;code&gt;ar&lt;/code&gt; tool.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# dpkg --build margherita targetdir
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;# ar t build/margherita_1.0.0_all.deb
+&lt;p&gt;&amp;hellip;which, by the way, has the exact same effect as doing this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg-deb --build margherita targetdir
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;[A quick shufti at the man-page for both &lt;code&gt;dpkg&lt;/code&gt; and &lt;code&gt;dpkg-deb&lt;/code&gt; reveals their symbiosis.]&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;--build&lt;/code&gt; option takes a single argument - the root source directory (&lt;code&gt;margherita/&lt;/code&gt;).  The second positional argument is an &lt;em&gt;existing&lt;/em&gt; target directory into which the archive is built (&lt;code&gt;targetdir/&lt;/code&gt; in our example).  &lt;em&gt;[If the second argument is something that doesn&amp;rsquo;t exist, it is used, instead, as the name of the package file that&amp;rsquo;s created.]&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is what happens when we actually do it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# mkdir targetdir
+# dpkg-deb --build margherita targetdir
+dpkg-deb: building package `margherita&#39; in `targetdir/margherita_1.0.0_all.deb&#39;.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You may be interested to see what&amp;rsquo;s actually inside the generated binary &lt;code&gt;.deb&lt;/code&gt; file.  At its lowest level, the Debian package file is actually an &lt;a href=&#34;https://en.wikipedia.org/wiki/Ar_%28Unix%29&#34;&gt;&lt;code&gt;ar&lt;/code&gt;&lt;/a&gt; format archive.  So if you want to look inside it you can use the &lt;code&gt;ar&lt;/code&gt; tool like so.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ar t targetdir/margherita_1.0.0_all.deb
 debian-binary
 control.tar.gz
 data.tar.xz
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You could also extract these files using &lt;code&gt;ar x&lt;/code&gt; and examine each one (&lt;em&gt;only if you&amp;rsquo;re not busy&lt;/em&gt;).  &lt;code&gt;debian-binary&lt;/code&gt; is just a text file containing the Debian file format version. And &lt;code&gt;control.tar.gz&lt;/code&gt; is our tarred, compressed control file - and any other stuff that was in the &lt;code&gt;DEBIAN/&lt;/code&gt; directory would have gone in here too.  &lt;code&gt;data.tar.gz&lt;/code&gt; is a tar-ball of the actual files that will be installed.&lt;/p&gt;
+
+&lt;p&gt;All that remains is to chew the crust. As rogue Debianeers we want to see if our DIY, budget package behaves as we might expect it to.&lt;/p&gt;
+
+&lt;p&gt;Can we install it?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg -i targetdir/margherita_1.0.0_all.deb
+Selecting previously unselected package margherita.
+(Reading database ... 24742 files and directories currently installed.)
+Preparing to unpack .../margherita_1.0.0_all.deb ...
+Unpacking margherita (1.0.0) ...
+Setting up margherita (1.0.0) ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Yes we can.&lt;/p&gt;
+
+&lt;p&gt;Can we use it?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# mozzarella
+Stringy cheese!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Yes we can.&lt;/p&gt;
+
+&lt;p&gt;Can we remove it?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# dpkg -r margherita
+(Reading database ... 24743 files and directories currently installed.)
+Removing margherita (1.0.0) ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Yes we can.&lt;/p&gt;
+
+&lt;p&gt;&amp;lsquo;Nuff said!  We&amp;rsquo;ve stripped down the essence of a Debian package to see how to easily create one and use it.&lt;/p&gt;
+
+&lt;p&gt;With a bit of imagination you can easily see how a whole wealth of development tools and workflows can be built around this simple base.  Unsurprisingly, exactly this sort of ecosystem exists.  How Debian distributions are put together depends on it. For those contributing to &lt;em&gt;that&lt;/em&gt; story a much deeper understanding of the shop-floor workings is needed.&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, the main point remains.  If you&amp;rsquo;re just trying to get your teeth into a slice, trying to comprehend the whole pizza factory may leave you hungry for a while.  A lot of what&amp;rsquo;s out there may be totally unnecessary to you if you&amp;rsquo;re simply trying to piggy-back the process to distribute your own software.&lt;/p&gt;
 </description>
     </item>
     
