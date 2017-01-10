@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title> Development &middot; a4 Pizza </title>
+  <title> Simples .pkg &middot; a4 Pizza </title>
 
   
   <link rel="stylesheet" href="http://a4pizza.com/css/poole.css">
@@ -21,7 +21,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="http://a4pizza.com/categories/development/index.xml" rel="alternate" type="application/rss+xml" title="a4 Pizza" />
+  <link href="" rel="alternate" type="application/rss+xml" title="a4 Pizza" />
 
   
   <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
@@ -30,9 +30,8 @@
 
 </head>
 
-<body class="">
-
-<div class="sidebar">
+	<body class="">
+		<div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
       <a href="http://a4pizza.com/"><h1>a4 Pizza</h1></a>
@@ -55,18 +54,34 @@
 </div>
 
 
-  <div class="content container">
-    <ul class="posts">
-        
-        <li>
-          <span><a href="http://a4pizza.com/post/simplespkg/">Simples .pkg</a> <time class="pull-right post-list">Mon, Jan 9, 2017</time></span>
-        </li>
-        
-        <li>
-          <span><a href="http://a4pizza.com/post/simplesdeb/">Simples .deb</a> <time class="pull-right post-list">Sun, Jan 1, 2017</time></span>
-        </li>
-        
-    </ul>
-  </div>
-</body>
+		<div class="content container">
+			<div class="post">
+			 	<h1>Simples .pkg</h1>
+			  <span class="post-date">Mon, Jan 9, 2017</span>
+			      <p>Here is a very simple (and simplistic) example of building an OSX package using the <code>pkgbuild</code> tool.  We&rsquo;ll just create and install a package containing a single command line executable (bash script) called <code>pepperoni</code>.</p>
+
+<pre><code class="language-bash">$ mkdir -p ~/tmp/pepperoni/ROOT/usr/local/bin/
+$ cat &lt;&lt; EOF &gt; ~/tmp/pepperoni/ROOT/usr/local/bin/pepperoni
+#!/bin/bash
+echo Pepperoni!
+EOF
+$ chmod +x ~/tmp/pepperoni/ROOT/usr/local/bin/pepperoni
+$ pkgbuild --root ~/tmp/pepperoni/ROOT --identifier com.a4pizza.pepperoni --version 1.0 pepperoni.pkg
+$ open pepperoni.pkg
+</code></pre>
+
+<p>Opening the <code>.pkg</code> file should start up the Mac installer.  After following the installer instructions you should then be able to run the command.</p>
+
+<pre><code>$ pepperoni
+Pepperoni!
+</code></pre>
+
+<p>That&rsquo;s it!</p>
+
+			</div>
+
+			
+		</div>
+
+  </body>
 </html>

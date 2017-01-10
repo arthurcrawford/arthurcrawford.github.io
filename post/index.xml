@@ -7,18 +7,46 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2017 Art Crawford</copyright>
-    <lastBuildDate>Tue, 26 Jan 2016 07:50:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jan 2017 15:58:36 +0000</lastBuildDate>
     <atom:link href="http://a4pizza.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Simples .deb</title>
-      <link>http://a4pizza.com/post/simplestdeb/</link>
-      <pubDate>Tue, 26 Jan 2016 07:50:39 +0000</pubDate>
+      <title>Simples .pkg</title>
+      <link>http://a4pizza.com/post/simplespkg/</link>
+      <pubDate>Mon, 09 Jan 2017 15:58:36 +0000</pubDate>
       
-      <guid>http://a4pizza.com/post/simplestdeb/</guid>
-      <description>&lt;p&gt;If you&amp;rsquo;ve managed to choke down other spurious convenience food analogies in related posts on this site, well done!  I hope this one proves a little more palatable - with fewer anchovies at least.&lt;/p&gt;
+      <guid>http://a4pizza.com/post/simplespkg/</guid>
+      <description>&lt;p&gt;Here is a very simple (and simplistic) example of building an OSX package using the &lt;code&gt;pkgbuild&lt;/code&gt; tool.  We&amp;rsquo;ll just create and install a package containing a single command line executable (bash script) called &lt;code&gt;pepperoni&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;We&amp;rsquo;re starting from the assumption that we want to build the simplest Debian package we can, just so we can understand the minimal set of tools and ingredients we need - no more.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir -p ~/tmp/pepperoni/ROOT/usr/local/bin/
+$ cat &amp;lt;&amp;lt; EOF &amp;gt; ~/tmp/pepperoni/ROOT/usr/local/bin/pepperoni
+#!/bin/bash
+echo Pepperoni!
+EOF
+$ chmod +x ~/tmp/pepperoni/ROOT/usr/local/bin/pepperoni
+$ pkgbuild --root ~/tmp/pepperoni/ROOT --identifier com.a4pizza.pepperoni --version 1.0 pepperoni.pkg
+$ open pepperoni.pkg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Opening the &lt;code&gt;.pkg&lt;/code&gt; file should start up the Mac installer.  After following the installer instructions you should then be able to run the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ pepperoni
+Pepperoni!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Simples .deb</title>
+      <link>http://a4pizza.com/post/simplesdeb/</link>
+      <pubDate>Sun, 01 Jan 2017 07:50:39 +0000</pubDate>
+      
+      <guid>http://a4pizza.com/post/simplesdeb/</guid>
+      <description>&lt;p&gt;Suppose we want to build the simplest Debian package we can, just so we can understand the minimal set of tools and ingredients we need - no more.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve managed to choke down other spurious convenience food analogies in related posts on this site, well done!  I hope this one proves palatable - with fewer anchovies at least.&lt;/p&gt;
 
 &lt;p&gt;We think we pretty much &lt;em&gt;get&lt;/em&gt; Debian package management and distribution.  At least we do on a workaday basis; &lt;code&gt;apt-get&lt;/code&gt;, &lt;code&gt;dpkg&lt;/code&gt;, &lt;code&gt;aptitude&lt;/code&gt; and all their chums.  But let&amp;rsquo;s say we want to build our &lt;em&gt;own&lt;/em&gt; software into a Debian package.  There&amp;rsquo;s nothing remotely &amp;ldquo;official&amp;rdquo; about our approach here by the way - we simply want to hot-wire, and joy-ride, the &lt;em&gt;Debian Pizza Delivery Scooter of Mirth&lt;/em&gt;.&lt;/p&gt;
 
@@ -34,6 +62,8 @@ margherita
     `-- bin
         `-- mozzarella
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Simples!&lt;/p&gt;
 
 &lt;p&gt;There&amp;rsquo;s not much there when you boil it down.  This may come as a surprise to some - it may even upset others!&lt;/p&gt;
 
@@ -83,6 +113,15 @@ Architecture: all
 &lt;pre&gt;&lt;code&gt;# mkdir targetdir
 # dpkg-deb --build margherita targetdir
 dpkg-deb: building package `margherita&#39; in `targetdir/margherita_1.0.0_all.deb&#39;.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;dpkg&lt;/code&gt; has the &lt;code&gt;-c&lt;/code&gt; option for listing the contents.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# dpkg -c targetdir/margherita_1.0.0_all.deb
+drwxr-xr-x root/root         0 2017-01-01 07:07 ./
+drwxr-xr-x root/root         0 2017-01-01 07:07 ./usr/
+drwxr-xr-x root/root         0 2017-01-01 07:08 ./usr/bin/
+-rwxr-xr-x root/root        33 2017-01-01 07:08 ./usr/bin/mozzarella
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;You may be interested to see what&amp;rsquo;s actually inside the generated binary &lt;code&gt;.deb&lt;/code&gt; file.  At its lowest level, the Debian package file is actually an &lt;a href=&#34;https://en.wikipedia.org/wiki/Ar_%28Unix%29&#34;&gt;&lt;code&gt;ar&lt;/code&gt;&lt;/a&gt; format archive.  So if you want to look inside it you can use the &lt;code&gt;ar&lt;/code&gt; tool like so.&lt;/p&gt;
