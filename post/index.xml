@@ -28,13 +28,44 @@ $ pkgbuild --root ~/tmp/pepperoni/ROOT --identifier com.a4pizza.pepperoni --vers
 $ open pepperoni.pkg
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Opening the &lt;code&gt;.pkg&lt;/code&gt; file should start up the Mac installer.  After following the installer instructions you should then be able to run the command.&lt;/p&gt;
+&lt;p&gt;Opening the &lt;code&gt;.pkg&lt;/code&gt; file fires up the Mac installer.  After following the installer instructions you&amp;rsquo;ll be able to run the command.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ pepperoni
 Pepperoni!
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;That&amp;rsquo;s it!&lt;/p&gt;
+
+&lt;p&gt;But if you&amp;rsquo;d like to go further and check inside the package file you created you can do this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ lsbom `pkgutil --bom pepperoni.pkg`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you can also check the files that were installed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ pkgutil --files com.a4pizza.pepperoni
+usr
+usr/local
+usr/local/bin
+usr/local/bin/pepperoni
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The installer also keeps hold of a &lt;em&gt;receipt&lt;/em&gt; of what was installed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ pkgutil --pkgs | grep pizza
+com.a4pizza.pepperoni
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you later delete the installed files you can also &lt;em&gt;forget&lt;/em&gt; the package as follows.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ sudo pkgutil --forget com.a4pizza.pepperoni
+$ pkgutil --pkgs | grep pizza
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All gone!&lt;/p&gt;
+
+&lt;p&gt;I said this was a very simplistic example.  You&amp;rsquo;ll obviously need to do a bit more work to add an update and uninstall capability, but hopefully this will give you a first foothold.&lt;/p&gt;
 </description>
     </item>
     

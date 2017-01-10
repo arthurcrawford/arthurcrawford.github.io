@@ -80,13 +80,44 @@ $ pkgbuild --root ~/tmp/pepperoni/ROOT --identifier com.a4pizza.pepperoni --vers
 $ open pepperoni.pkg
 </code></pre>
 
-<p>Opening the <code>.pkg</code> file should start up the Mac installer.  After following the installer instructions you should then be able to run the command.</p>
+<p>Opening the <code>.pkg</code> file fires up the Mac installer.  After following the installer instructions you&rsquo;ll be able to run the command.</p>
 
 <pre><code>$ pepperoni
 Pepperoni!
 </code></pre>
 
 <p>That&rsquo;s it!</p>
+
+<p>But if you&rsquo;d like to go further and check inside the package file you created you can do this:</p>
+
+<pre><code class="language-bash">$ lsbom `pkgutil --bom pepperoni.pkg`
+</code></pre>
+
+<p>And you can also check the files that were installed.</p>
+
+<pre><code class="language-bash">$ pkgutil --files com.a4pizza.pepperoni
+usr
+usr/local
+usr/local/bin
+usr/local/bin/pepperoni
+</code></pre>
+
+<p>The installer also keeps hold of a <em>receipt</em> of what was installed.</p>
+
+<pre><code>$ pkgutil --pkgs | grep pizza
+com.a4pizza.pepperoni
+</code></pre>
+
+<p>If you later delete the installed files you can also <em>forget</em> the package as follows.</p>
+
+<pre><code class="language-bash">$ sudo pkgutil --forget com.a4pizza.pepperoni
+$ pkgutil --pkgs | grep pizza
+$
+</code></pre>
+
+<p>All gone!</p>
+
+<p>I said this was a very simplistic example.  You&rsquo;ll obviously need to do a bit more work to add an update and uninstall capability, but hopefully this will give you a first foothold.</p>
 
   </div>
   
